@@ -16,16 +16,16 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RequestMapping(value = "/depot")
 public class DepotController {
-    /*@Autowired
+    @Autowired
     private DepotMetier depotMetier;
     @PostMapping(value = "/add",consumes= {MediaType.APPLICATION_JSON_VALUE})
     @PreAuthorize("hasAuthority('ROLE_SUPERADMIN')")
     public  boolean newDepot(@RequestBody DepotForm depotForm) throws Exception {
-       *//* if(depotMetier.existsByNumeroCompte(depotForm.getNumeroCompte())) {
+      /* if(depotMetier.existsByNumeroCompte(depotForm.getNumeroCompte())) {
            System.out.println("Ce compte n'existe pas");
-        }*//*
-        depotMetier.newDepot(depot.getMontant(), compteBancaire.getNumeroCompte());
+        }*/
+        depotMetier.newDepot( depotForm.getMontant(), depotForm.getNumeroCompte());
         return true;
-    }*/
+    }
 
 }

@@ -24,31 +24,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
-    @Size(min=3, max = 50)
+
     private String name;
-    @NotBlank
-    @Size(min=3, max = 50)
+
     private String username;
-    @NaturalId
-    @NotBlank
-    @Size(max = 50)
+
     @Email
     private String email;
-    @NotBlank
-    @Size(min=6, max = 100)
+
     private String password;
-    @NotBlank
-    @Size(min=5, max = 50)
+
     private String adresse;
-    @NotBlank
-    @Size(min=9, max = 15)
+
     private  String telephone;
-    @NotBlank
-    @Size(min=2, max = 30)
+
     private  String profil;
-    @NotBlank
-    @Size(min=2, max = 10)
+
     private  String etat;
     private  String imageName;
 
@@ -72,6 +63,9 @@ public class User {
         this.imageName = imageName;
         this.roles = roles;
 
+    }
+
+    public User(String name, String username, String email, String encode, String adresse, String telephone, String profil, String etat, String imageName) {
     }
 
     public Long getId() {

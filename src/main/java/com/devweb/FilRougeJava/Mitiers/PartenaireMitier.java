@@ -7,5 +7,4 @@ import java.util.List;
 public interface PartenaireMitier {
     public Partenaire addPart(Partenaire part);
     public List<Partenaire> liste();
-
 }

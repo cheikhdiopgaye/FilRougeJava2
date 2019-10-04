@@ -24,7 +24,9 @@ public class DepotMetierImpl implements  DepotMetier {
         );
         depot.setDatedepot(new Date());
         depot.setCompteBancaire(c);
+        depot.setMontant(montant);
         c.setSolde(c.getSolde()+montant);
+         depotRepository.save(depot);
         return true;
     }
 }
