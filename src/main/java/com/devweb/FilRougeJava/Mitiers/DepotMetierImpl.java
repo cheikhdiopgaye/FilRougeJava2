@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
+
 @Service
 public class DepotMetierImpl implements  DepotMetier {
     @Autowired
@@ -28,5 +30,8 @@ public class DepotMetierImpl implements  DepotMetier {
         c.setSolde(c.getSolde()+montant);
          depotRepository.save(depot);
         return true;
+    }
+    public List<Depot> listeDepot(){
+        return depotRepository.findAll();
     }
 }

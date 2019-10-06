@@ -33,7 +33,7 @@ public class Partenaire implements Serializable {
     private String telephon;
     @NotBlank
     @Size(min = 2, max = 10)
-    private String etat;
+    private String etats;
 
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -45,12 +45,12 @@ public class Partenaire implements Serializable {
     public Partenaire() {
     }
 
-    public Partenaire(@NotBlank @Size(min = 3, max = 50) String raisonSocial, @NotBlank @Size(min = 5, max = 20) String ninea, @NotBlank @Size(min = 3, max = 50) String adress, @NotBlank @Size(min = 9, max = 15) String telephon, @NotBlank @Size(min = 2, max = 10) String etat, List<CompteBancaire> compteBancaires) {
+    public Partenaire(@NotBlank @Size(min = 3, max = 50) String raisonSocial, @NotBlank @Size(min = 5, max = 20) String ninea, @NotBlank @Size(min = 3, max = 50) String adress, @NotBlank @Size(min = 9, max = 15) String telephon, @NotBlank @Size(min = 2, max = 10) String etats, List<CompteBancaire> compteBancaires) {
         this.raisonSocial = raisonSocial;
         this.ninea = ninea;
         this.adress = adress;
         this.telephon = telephon;
-        this.etat = etat;
+        this.etats = etats;
         this.compteBancaires = compteBancaires;
     }
 
@@ -94,12 +94,12 @@ public class Partenaire implements Serializable {
         this.telephon = telephon;
     }
 
-    public String getEtat() {
-        return etat;
+    public String getEtats() {
+        return etats;
     }
 
-    public void setEtat(String etat) {
-        this.etat = etat;
+    public void setEtats(String etats) {
+        this.etats = etats;
     }
 
     public List<CompteBancaire> getCompteBancaires() {

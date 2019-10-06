@@ -1,5 +1,9 @@
 package Security;
 
+import com.devweb.FilRougeJava.model.Role;
+import com.devweb.FilRougeJava.model.RoleName;
+import com.devweb.FilRougeJava.model.User;
+import com.devweb.FilRougeJava.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +21,7 @@ import java.util.function.Function;
 public class JwtTokenUtil implements Serializable {
     private static final long serialVersionUID = -2550185165626007488L;
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    private UserRepository userRepository;
     @Value("${jwt.secret}")
     private String secret;
     //retrieve username from jwt token
@@ -41,7 +46,7 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
     //generate token for user
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(UserDetails userDetails) throws Exception {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
     }
@@ -50,8 +55,18 @@ public class JwtTokenUtil implements Serializable {
 //2. Sign the JWT using the HS512 algorithm and secret key.
 //3. According to JWS Compact Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
 //   compaction of the JWT to a URL-safe string
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+    private String doGenerateToken(Map<String, Object> claims, String subject) throws Exception {
+        User user = userRepository.findByUsername(subject).orElseThrow();
+        String auth= null;
+        for(Role role: user.getRoles()){
+            RoleName rien= role.getName();
+            System.out.println(rien);
+            auth=rien.name();
+        }
+        if (!user.getEtat().equals("activé")){
+            throw new Exception("Compte bloqué, Veillez vous adresser à votre administrateur. ");
+        }
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis())).claim("role",auth)
                 .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }

@@ -1,14 +1,10 @@
 package com.devweb.FilRougeJava.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,7 +24,7 @@ public class User {
     private String name;
 
     private String username;
-
+    @NaturalId
     @Email
     private String email;
 
@@ -42,6 +38,9 @@ public class User {
 
     private  String etat;
     private  String imageName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private Partenaire partenaire;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -49,9 +48,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+
     public User() {}
 
-    public User(@NotBlank @Size(min = 3, max = 50) String name, @NotBlank @Size(min = 3, max = 50) String username, @NotBlank @Size(max = 50) @Email String email, @NotBlank @Size(min = 6, max = 100) String password, @NotBlank @Size(min = 5, max = 50) String adresse, @NotBlank @Size(min = 9, max = 15) String telephone, @NotBlank @Size(min = 2, max = 30) String profil, @NotBlank @Size(min = 2, max = 10) String etat, String imageName, Set<Role> roles) {
+    public User(String name, String username, @Email String email, String password, String adresse, String telephone, String profil, String etat, String imageName, Partenaire partenaire, Set<Role> roles) {
         this.name = name;
         this.username = username;
         this.email = email;
@@ -61,8 +61,8 @@ public class User {
         this.profil = profil;
         this.etat = etat;
         this.imageName = imageName;
+        this.partenaire = partenaire;
         this.roles = roles;
-
     }
 
     public User(String name, String username, String email, String encode, String adresse, String telephone, String profil, String etat, String imageName) {
@@ -156,5 +156,11 @@ public class User {
         this.imageName = imageName;
     }
 
+    public Partenaire getPartenaire() {
+        return partenaire;
+    }
 
+    public void setPartenaire(Partenaire partenaire) {
+        this.partenaire = partenaire;
+    }
 }

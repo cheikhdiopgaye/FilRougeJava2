@@ -16,7 +16,7 @@ public class ComptebancaireController {
     @Autowired
     public CompteMetier compteMetier;
     @PostMapping(value = "/add",consumes= {MediaType.APPLICATION_JSON_VALUE})
-    @PreAuthorize("hasAuthority('ROLE_SUPERADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_SUPER_ADMIN')")
     public boolean addCompte(@RequestBody Partenaire partenaire) throws Exception {
         compteMetier.addCompte(partenaire.getRaisonSocial());
         return true;
